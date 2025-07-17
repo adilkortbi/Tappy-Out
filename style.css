@@ -27,43 +27,35 @@
     nav {
         grid-area: nav;
         text-align: center;
-        list-style: none;     
-        padding: 0;           
-        margin: 0;              
-        display: flex;          
-        gap: 20px;               
-        justify-content: center; 
-        background-color: #f8f8f8; 
-        padding: 15px 0;        
-        border-bottom: 1px solid #ddd; 
+        background-image:url(img.jpeg);
     }
-    
-    .nav li a {
-        text-decoration: none;   
-        color: #333;            
-        font-weight: bold;       
-        padding: 8px 12px;
-        border-radius: 4px;
-        transition: background-color 0.3s ease;
+    nav a {
+        color: rgb(82, 82, 82);
     }
-    
-    .nav li a:hover {
-        background-color: #e0e0e0; 
-        color: #000;
+    nav li {
+        list-style: none;
+        display: flex;
+        gap: 2rem;
+        
     }
-    
+    nav ul{
+        display: flex;
+        justify-content: space-between;
+    }
     
     main {
         grid-area: main;
         text-align: center;
         color: white;
-        background-color: black;
+        background-color: rgb(95, 95, 95);
     }
     aside {
         grid-area: A;
+        background-image: url(img.jpeg);
     }
     footer {
         grid-area: F;
+        background-image: url(img.jpeg);
     }
     #wrapper {
         min-height: 100vh;
