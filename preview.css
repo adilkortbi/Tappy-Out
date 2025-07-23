@@ -1,0 +1,65 @@
+ nav {
+        grid-area: nav;
+        text-align: center;
+        
+    }
+    nav a {
+        color: rgb(82, 82, 82);
+    }
+    nav li {
+        list-style: none;
+        display: flex;
+        gap: 2rem;
+        
+    }
+    nav ul{
+        display: flex;
+        justify-content: space-between;
+    }
+body {
+      font-family: Arial, sans-serif;
+      background: #959595;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    .card-preview {
+      width: 340px;
+      height: 215px; 
+      background-color: white;
+      border: 1px solid #ccc;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+      background-size: cover;
+      background-position: center;
+      margin-bottom: 20px;
+      
+    }
+
+      .card-preview:hover {
+      transform: rotateY(10deg) rotateX(5deg) scale(1.02);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    }
+
+    .upload-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    input[type="file"] {
+      padding: 8px;
+    }
+    label{
+        color: white;
+    }
