@@ -20,49 +20,59 @@
       <nav>
         <ul>
           <li><a href="index.html">Home</a></li>
-          <li><a href="preview.html">Preview</a></li>
-          <li><a href="special-offer.html">Special-Offers</a></li>
-          <li><a href="Cart.html">Cart</a></li>
+          <li><a href="Cart.html">Customise Card</a></li>
         </ul>
       </nav>
       <main>
         <div class="cart-items"></div>
-          <div class="cart-item" data-id="1">
-            <img src="cards1.jpg" alt="Product Image" class="cart-item-image">
-            <div class="cart-item-details">
-              <h4 class="cart-item-name">MATTE-BLACK</h4>
-              <p class="cart-item-price">$17.99</p>
-              <input type="number" class="cart-item-quantity" value="1" min="1">
-              <button type="button" class="add-to-cart">Add To Cart</button>
-              <button type="button" class="remove-cart-item">Remove</button>
-            </div>
+        <div class="cart-item" data-id="1">
+          <img src="cards1.jpg" alt="Product Image" class="cart-item-image">
+          <div class="cart-item-details">
+            <h4 class="cart-item-name">MATTE-BLACK</h4>
+            <p class="cart-item-price">$17.99</p>
+            <input type="number" class="cart-item-quantity" value="1" min="1">
+            <button type="button" class="add-to-cart">Add To Cart</button>
+            <button type="button" class="remove-cart-item">Remove</button>
           </div>
-          <div class="cart-item" data-id="2">
-            <img src="cards2-2.jpg" alt="Product Image" class="cart-item-image">
-            <div class="cart-item-details">
-              <h4 class="cart-item-name">SLEEK-WHITE</h4>
-              <p class="cart-item-price">$17.99</p>
-              <input type="number" class="cart-item-quantity" value="1" min="1">
-              <button type="button" class="add-to-cart">Add To Cart</button>
-              <button type="button" class="remove-cart-item">Remove</button>
-            </div>
+        </div>
+        <div class="cart-item" data-id="2">
+          <img src="cards2-2.jpg" alt="Product Image" class="cart-item-image">
+          <div class="cart-item-details">
+            <h4 class="cart-item-name">SLEEK-WHITE</h4>
+            <p class="cart-item-price">$17.99</p>
+            <input type="number" class="cart-item-quantity" value="1" min="1">
+            <button type="button" class="add-to-cart">Add To Cart</button>
+            <button type="button" class="remove-cart-item">Remove</button>
           </div>
-          <div class="cart-items"></div>
-          <div id="cart-summary">
-            <h3>Cart Summary</h3>
-            <p>Total Items: <span id="total-items">0</span></p>
-            <p>Total Price: $<span id="total-price">0.00</span></p>
+          <h2>Preview Your Business Card</h2>
+          <div class="card-preview" id="cardPreview">
           </div>
-<button type="button" id="clear-cart">Clear Cart</button>
-
-        </main>
-        <aside>
-          <img src="jpg" alt="">
-          <h2></h2>
-          <p>
-          </p>
-        </aside>
-        <footer>Copyright &copy; 2025</footer>
-      </div>
-    </body>
-    </html>
+          <div class="upload-area">
+            <label for="imageUpload">Upload your logo or card image</label>
+            <input type="file" id="imageUpload" accept="image/*">
+          </div>
+          <div class="cart-item-details">
+            <h4 class="cart-item-name">SLEEK-WHITE</h4>
+            <p class="cart-item-price">$24.99</p>
+            <input type="number" class="cart-item-quantity" value="1" min="1">
+            <button type="button" class="add-to-cart">Add To Cart</button>
+            <button type="button" class="remove-cart-item">Remove</button>
+        </div>
+        </div>
+        <div class="cart-items"></div>
+        <div id="cart-summary">
+          <h3>Cart Summary</h3>
+          <p>Total Items: <span id="total-items">0</span></p>
+          <p>Total Price: $<span id="total-price">0.00</span></p>
+        </div>
+      </main>
+      <aside>
+        <img src="jpg" alt="">
+        <button type="button" class="proceed-to-checkout"> Proceed To Checkout </button>
+        <p>
+        </p>
+      </aside>
+      <footer>Copyright &copy; 2025</footer>
+    </div>
+  </body>
+  </html>
