@@ -6,8 +6,8 @@ function updateCartSummary() {
 
   for (const id in cart) {
     let item = cart[id];
-    totalItems = totalItems + item.quantity;
-    totalPrice = totalPrice + item.price * item.quantity;
+    totalItems += item.quantity;
+    totalPrice += item.price * item.quantity;
   }
 
   let totalItemsElement = document.getElementById('total-items');
@@ -20,34 +20,41 @@ function updateCartSummary() {
 }
 
 function showCartItems() {
-  let cartList = document.getElementById('cart-items-list');
 
-  // If cart-items-list element doesn't exist yet, create and add it
-  if (!cartList) {
-    cartList = document.createElement('ul');
-    cartList.id = 'cart-items-list';
-    let cartSummary = document.getElementById('cart-summary');
-    if (cartSummary) {
-      cartSummary.parentNode.insertBefore(cartList, cartSummary);
-    } else {
-      document.body.appendChild(cartList);
-    }
-  }
+  let cartContainer = document.querySelector('.cart-items');
+  cartContainer.innerHTML = ''; 
 
-  cartList.innerHTML = '';
-
-  for (const id in cart) {
+  for (let id in cart) {
     let item = cart[id];
-    let li = document.createElement('li');
-    li.textContent = item.name + ' - $' + item.price + ' × ' + item.quantity + ' = $' + (item.price * item.quantity).toFixed(2);
-    cartList.appendChild(li);
+
+    let cartItemDiv = document.createElement('div');
+    cartItemDiv.className = 'cart-item';
+
+   
+    let imageHTML = '';
+    if (item.image) {
+      imageHTML = `<img src="${item.image}" alt="Custom Card" class="cart-item-image" />`;
+    }
+
+    cartItemDiv.innerHTML = `
+      ${imageHTML}
+      <div class="cart-item-details">
+        <h4 class="cart-item-name">${item.name}</h4>
+        <p class="cart-item-price">$${item.price.toFixed(2)}</p>
+        <p class="cart-item-quantity">Quantity: ${item.quantity}</p>
+      </div>
+    `;
+
+    cartContainer.appendChild(cartItemDiv);
   }
 }
 
-window.onload = function() {
+
+
+window.onload = function () {
   let addButtons = document.getElementsByClassName('add-to-cart');
   for (let i = 0; i < addButtons.length; i++) {
-    addButtons[i].addEventListener('click', function() {
+    addButtons[i].addEventListener('click', function () {
       let product = this.parentElement.parentElement;
       let id = product.getAttribute('data-id');
       let name = product.querySelector('.cart-item-name').textContent;
@@ -62,7 +69,7 @@ window.onload = function() {
       }
 
       if (cart[id]) {
-        cart[id].quantity = cart[id].quantity + quantity;
+        cart[id].quantity += quantity;
       } else {
         cart[id] = { name: name, price: price, quantity: quantity };
       }
@@ -77,7 +84,7 @@ window.onload = function() {
 
   let removeButtons = document.getElementsByClassName('remove-cart-item');
   for (let i = 0; i < removeButtons.length; i++) {
-    removeButtons[i].addEventListener('click', function() {
+    removeButtons[i].addEventListener('click', function () {
       let product = this.parentElement.parentElement;
       let id = product.getAttribute('data-id');
       let name = product.querySelector('.cart-item-name').textContent;
@@ -88,26 +95,50 @@ window.onload = function() {
         alert(name + " removed from cart.");
         updateCartSummary();
         showCartItems();
-      } else {
-        alert(name + " is not in the cart.");
       }
     });
   }
 
-  let clearCartBtn = document.getElementById('clear-cart');
-  if (clearCartBtn) {
-    clearCartBtn.addEventListener('click', function() {
-      if (confirm("Are you sure you want to clear the cart?")) {
-        cart = {};
-        localStorage.removeItem('cart');
-        alert("Cart has been cleared.");
-        updateCartSummary();
-        showCartItems();
-      }
-    });
-  }
-
-  // Initialize UI on page load
   updateCartSummary();
   showCartItems();
 };
+
+const imageInput = document.getElementById('imageUpload');
+const previewDiv = document.getElementById('cardPreview');
+const addToCartButton = document.getElementById('addToCartButton');
+let uploadedImageData = null;
+
+imageInput.addEventListener('change', function () {
+  const file = this.files[0];
+
+  if (file && file.type.startsWith('image/')) {
+    const reader = new FileReader();
+    reader.onload = function (event) {
+      uploadedImageData = event.target.result;
+      previewDiv.innerHTML = `<img src="${uploadedImageData}" alt="Card Preview" style="max-width: 300px;">`;
+    };
+    reader.readAsDataURL(file);
+  } else {
+    alert("Please upload a valid image file.");
+  }
+});
+
+addToCartButton.addEventListener('click', function () {
+  if (!uploadedImageData) {
+    alert("Please upload a card image first.");
+    return;
+  }
+
+  const customCard = {
+    name: 'Custom Card',
+    price: 24.99,
+    quantity: 1,
+    image: uploadedImageData
+  };
+
+  cart['custom-card'] = customCard;
+  localStorage.setItem('cart', JSON.stringify(cart));
+  alert("Custom card added to cart.");
+  updateCartSummary();
+  showCartItems();
+});
