@@ -20,9 +20,8 @@ function updateCartSummary() {
 }
 
 function showCartItems() {
-
   let cartContainer = document.querySelector('.cart-items');
-  cartContainer.innerHTML = ''; 
+  cartContainer.innerHTML = '';
 
   for (let id in cart) {
     let item = cart[id];
@@ -30,11 +29,9 @@ function showCartItems() {
     let cartItemDiv = document.createElement('div');
     cartItemDiv.className = 'cart-item';
 
-   
-    let imageHTML = '';
-    if (item.image) {
-      imageHTML = `<img src="${item.image}" alt="Custom Card" class="cart-item-image" />`;
-    }
+    let imageHTML = item.image
+      ? `<img src="${item.image}" alt="Custom Card" class="cart-item-image" />`
+      : '';
 
     cartItemDiv.innerHTML = `
       ${imageHTML}
@@ -48,8 +45,6 @@ function showCartItems() {
     cartContainer.appendChild(cartItemDiv);
   }
 }
-
-
 
 window.onload = function () {
   let addButtons = document.getElementsByClassName('add-to-cart');
@@ -76,7 +71,6 @@ window.onload = function () {
 
       localStorage.setItem('cart', JSON.stringify(cart));
       alert(name + " added to cart.");
-
       updateCartSummary();
       showCartItems();
     });
@@ -105,8 +99,6 @@ window.onload = function () {
 
 const imageInput = document.getElementById('imageUpload');
 const previewDiv = document.getElementById('cardPreview');
-const addToCartButton = document.getElementById('addToCartButton');
-let uploadedImageData = null;
 
 imageInput.addEventListener('change', function () {
   const file = this.files[0];
@@ -114,31 +106,10 @@ imageInput.addEventListener('change', function () {
   if (file && file.type.startsWith('image/')) {
     const reader = new FileReader();
     reader.onload = function (event) {
-      uploadedImageData = event.target.result;
-      previewDiv.innerHTML = `<img src="${uploadedImageData}" alt="Card Preview" style="max-width: 300px;">`;
+      previewDiv.innerHTML = `<img src="${event.target.result}" alt="Card Preview" style="max-width: 300px;">`;
     };
     reader.readAsDataURL(file);
   } else {
     alert("Please upload a valid image file.");
   }
-});
-
-addToCartButton.addEventListener('click', function () {
-  if (!uploadedImageData) {
-    alert("Please upload a card image first.");
-    return;
-  }
-
-  const customCard = {
-    name: 'Custom Card',
-    price: 24.99,
-    quantity: 1,
-    image: uploadedImageData
-  };
-
-  cart['custom-card'] = customCard;
-  localStorage.setItem('cart', JSON.stringify(cart));
-  alert("Custom card added to cart.");
-  updateCartSummary();
-  showCartItems();
 });
