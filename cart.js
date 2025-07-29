@@ -113,3 +113,35 @@ imageInput.addEventListener('change', function () {
     alert("Please upload a valid image file.");
   }
 });
+document.getElementById('checkout-button').addEventListener('click', function () {
+  if (Object.keys(cart).length === 0) {
+    alert("Your cart is empty.");
+    return;
+  }
+
+  const userLink = document.getElementById('customLink')?.value.trim() || "No link provided";
+
+  let message = "Order Summary:\n\n";
+
+  for (let id in cart) {
+    const item = cart[id];
+    message += `• ${item.name} - $${item.price} x ${item.quantity}\n`;
+  }
+
+  let total = Object.values(cart).reduce((sum, item) => sum + item.price * item.quantity, 0);
+  message += `\nTotal: $${total.toFixed(2)}\n\n`;
+
+  message += `User Link: ${userLink}\n`;
+
+  if (cart['custom-card']?.image) {
+    message += "\nPreview Image (copy & paste in browser):\n" + cart['custom-card'].image + "\n";
+  }
+
+  message += "\nPlease confirm the order.";
+
+  const email = "adilkortbi@Tappy-Out.com";
+  const subject = "New Tappy-Out Order";
+  const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+
+  window.location.href = mailtoLink;
+});
