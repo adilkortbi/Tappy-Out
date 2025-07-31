@@ -113,35 +113,31 @@ imageInput.addEventListener('change', function () {
     alert("Please upload a valid image file.");
   }
 });
-document.getElementById('checkout-button').addEventListener('click', function () {
+document.getElementById('checkout-button').addEventListener('click', async function () {
   if (Object.keys(cart).length === 0) {
     alert("Your cart is empty.");
     return;
   }
 
-  const userLink = document.getElementById('customLink')?.value.trim() || "No link provided";
+  try {
+    const response = await fetch('http://localhost:3000/create-checkout-session', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ cart }),
+    });
 
-  let message = "Order Summary:\n\n";
+    const data = await response.json();
 
-  for (let id in cart) {
-    const item = cart[id];
-    message += `• ${item.name} - $${item.price} x ${item.quantity}\n`;
+    if (data.id) {
+      const stripe = Stripe('pk_test_51Re1IqGastjZV4pbbPdBuW0ccEECiOmspIzV1yfICYrHB27iYMVMvdXadGHuZlnvOpr2AYBGTXtyBiFiRmxbqN1o003LtDFq8o');
+      stripe.redirectToCheckout({ sessionId: data.id });
+    } else {
+      alert("Failed to create checkout session.");
+    }
+  } catch (error) {
+    console.error("Error during checkout:", error);
+    alert("An error occurred. Please try again.");
   }
-
-  let total = Object.values(cart).reduce((sum, item) => sum + item.price * item.quantity, 0);
-  message += `\nTotal: $${total.toFixed(2)}\n\n`;
-
-  message += `User Link: ${userLink}\n`;
-
-  if (cart['custom-card']?.image) {
-    message += "\nPreview Image (copy & paste in browser):\n" + cart['custom-card'].image + "\n";
-  }
-
-  message += "\nPlease confirm the order.";
-
-  const email = "adilkortbi@Tappy-Out.com";
-  const subject = "New Tappy-Out Order";
-  const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
-
-  window.location.href = mailtoLink;
 });
