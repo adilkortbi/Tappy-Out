@@ -1,4 +1,7 @@
+
+
 let cart = JSON.parse(localStorage.getItem('cart')) || {};
+
 
 function updateCartSummary() {
   let totalItems = 0;
@@ -10,8 +13,8 @@ function updateCartSummary() {
     totalPrice += item.price * item.quantity;
   }
 
-  let totalItemsElement = document.getElementById('total-items');
-  let totalPriceElement = document.getElementById('total-price');
+  const totalItemsElement = document.getElementById('total-items');
+  const totalPriceElement = document.getElementById('total-price');
 
   if (totalItemsElement && totalPriceElement) {
     totalItemsElement.textContent = totalItems;
@@ -19,17 +22,19 @@ function updateCartSummary() {
   }
 }
 
+
 function showCartItems() {
-  let cartContainer = document.querySelector('.cart-items');
+  const cartContainer = document.querySelector('.cart-items');
   cartContainer.innerHTML = '';
 
-  for (let id in cart) {
-    let item = cart[id];
+  for (const id in cart) {
+    const item = cart[id];
 
-    let cartItemDiv = document.createElement('div');
+    const cartItemDiv = document.createElement('div');
     cartItemDiv.className = 'cart-item';
+    cartItemDiv.setAttribute('data-id', id);
 
-    let imageHTML = item.image
+    const imageHTML = item.image
       ? `<img src="${item.image}" alt="Custom Card" class="cart-item-image" />`
       : '';
 
@@ -39,49 +44,20 @@ function showCartItems() {
         <h4 class="cart-item-name">${item.name}</h4>
         <p class="cart-item-price">$${item.price.toFixed(2)}</p>
         <p class="cart-item-quantity">Quantity: ${item.quantity}</p>
+        <button type="button" class="remove-cart-item">Remove</button>
       </div>
     `;
 
     cartContainer.appendChild(cartItemDiv);
   }
-}
 
-window.onload = function () {
-  let addButtons = document.getElementsByClassName('add-to-cart');
-  for (let i = 0; i < addButtons.length; i++) {
-    addButtons[i].addEventListener('click', function () {
-      let product = this.parentElement.parentElement;
-      let id = product.getAttribute('data-id');
-      let name = product.querySelector('.cart-item-name').textContent;
-      let priceText = product.querySelector('.cart-item-price').textContent;
-      let quantityInput = product.querySelector('.cart-item-quantity');
-      let price = parseFloat(priceText.replace('$', ''));
-      let quantity = parseInt(quantityInput.value);
-
-      if (isNaN(quantity) || quantity < 1) {
-        alert("Please enter a valid quantity.");
-        return;
-      }
-
-      if (cart[id]) {
-        cart[id].quantity += quantity;
-      } else {
-        cart[id] = { name: name, price: price, quantity: quantity };
-      }
-
-      localStorage.setItem('cart', JSON.stringify(cart));
-      alert(name + " added to cart.");
-      updateCartSummary();
-      showCartItems();
-    });
-  }
-
-  let removeButtons = document.getElementsByClassName('remove-cart-item');
-  for (let i = 0; i < removeButtons.length; i++) {
-    removeButtons[i].addEventListener('click', function () {
-      let product = this.parentElement.parentElement;
-      let id = product.getAttribute('data-id');
-      let name = product.querySelector('.cart-item-name').textContent;
+ 
+  const removeButtons = document.querySelectorAll('.remove-cart-item');
+  removeButtons.forEach(button => {
+    button.addEventListener('click', function () {
+      const productDiv = this.closest('.cart-item');
+      const id = productDiv.getAttribute('data-id');
+      const name = cart[id] ? cart[id].name : '';
 
       if (cart[id]) {
         delete cart[id];
@@ -91,50 +67,100 @@ window.onload = function () {
         showCartItems();
       }
     });
-  }
-
-  updateCartSummary();
-  showCartItems();
-};
-function addCartSummaryToForm() {
-  let cart = JSON.parse(localStorage.getItem('cart')) || {};
-  let summary = "";
-
-  if (Object.keys(cart).length === 0) {
-    alert("Cart is empty. Please add items before submitting.");
-    event.preventDefault();
-    return false;
-  }
-
-  for (let id in cart) {
-    const item = cart[id];
-    summary += `• ${item.name} - $${item.price} x ${item.quantity}\n`;
-  }
-
-  let total = Object.values(cart).reduce((sum, item) => sum + item.price * item.quantity, 0);
-  summary += `\nTotal Price: $${total.toFixed(2)}\n`;
-
-  document.getElementById('cartSummary').value = summary;
+  });
 }
 
 
-const imageInput = document.getElementById('imageUpload');
+window.addEventListener('DOMContentLoaded', () => {
+  const addButtons = document.querySelectorAll('.add-to-cart');
+  
+  addButtons.forEach(button => {
+    button.addEventListener('click', function () {
+      const product = this.closest('.cart-item');
+      const id = product.getAttribute('data-id');
+      const name = product.querySelector('.cart-item-name').textContent;
+      const priceText = product.querySelector('.cart-item-price').textContent;
+      const quantityInput = product.querySelector('.cart-item-quantity');
+      const price = parseFloat(priceText.replace('$', ''));
+      const quantity = parseInt(quantityInput.value);
+
+      if (isNaN(quantity) || quantity < 1) {
+        alert("Please enter a valid quantity.");
+        return;
+      }
+
+      
+      const imgElement = product.querySelector('.cart-item-image');
+      const imageSrc = imgElement ? imgElement.src : null;
+
+      if (cart[id]) {
+        cart[id].quantity += quantity;
+      } else {
+        cart[id] = { name, price, quantity, image: imageSrc };
+      }
+
+      localStorage.setItem('cart', JSON.stringify(cart));
+      alert(name + " added to cart.");
+      updateCartSummary();
+      showCartItems();
+    });
+  });
+
+  updateCartSummary();
+  showCartItems();
+});
+
+
+function addCartSummaryToForm(event) {
+  event.preventDefault();
+
+  const cartData = JSON.parse(localStorage.getItem('cart')) || {};
+  if (Object.keys(cartData).length === 0) {
+    alert("Cart is empty. Please add items before submitting.");
+    return false;
+  }
+
+  let summary = "";
+  for (const id in cartData) {
+    const item = cartData[id];
+    summary += `• ${item.name} - $${item.price.toFixed(2)} x ${item.quantity}\n`;
+  }
+
+  const total = Object.values(cartData).reduce((sum, item) => sum + item.price * item.quantity, 0);
+  summary += `\nTotal Price: $${total.toFixed(2)}\n`;
+
+  const cartSummaryInput = document.getElementById('cartSummary');
+  if (cartSummaryInput) {
+    cartSummaryInput.value = summary;
+  }
+
+ 
+  event.target.form.submit();
+}
+
+
+const imageInput = document.getElementById('previewUpload');
 const previewDiv = document.getElementById('cardPreview');
 
-imageInput.addEventListener('change', function () {
-  const file = this.files[0];
+if (imageInput && previewDiv) {
+  imageInput.addEventListener('change', function () {
+    const file = this.files[0];
 
-  if (file && file.type.startsWith('image/')) {
-    const reader = new FileReader();
-    reader.onload = function (event) {
-      previewDiv.innerHTML = `<img src="${event.target.result}" alt="Card Preview" style="max-width: 300px;">`;
-    };
-    reader.readAsDataURL(file);
-  } else {
-    alert("Please upload a valid image file.");
-  }
-});
-document.getElementById('checkout-button').addEventListener('click', async function () {
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        previewDiv.innerHTML = `<img src="${event.target.result}" alt="Card Preview" style="max-width: 300px;">`;
+      };
+      reader.readAsDataURL(file);
+    } else {
+      alert("Please upload a valid image file.");
+      previewDiv.innerHTML = ''; 
+    }
+  });
+}
+
+
+document.getElementById('checkout-button').addEventListener('click', async () => {
   if (Object.keys(cart).length === 0) {
     alert("Your cart is empty.");
     return;
@@ -143,9 +169,7 @@ document.getElementById('checkout-button').addEventListener('click', async funct
   try {
     const response = await fetch('http://localhost:3000/create-checkout-session', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ cart }),
     });
 

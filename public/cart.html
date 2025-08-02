@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,95 +17,81 @@
         <li><a href="Cart.html">Customise Card</a></li>
       </ul>
     </nav>
-
     <main>
-      <div class="cart-item" data-id="1">
-        <img src="img4.jpg" alt="Product Image" class="cart-item-image">
-        <div class="cart-item-details">
-          <h4 class="cart-item-name">MATTE-BLACK</h4>
-          <p class="cart-item-price">$17.99</p>
-          <input type="number" class="cart-item-quantity" value="1" min="1">
-          <button type="button" class="add-to-cart">Add To Cart</button>
-          <button type="button" class="remove-cart-item">Remove</button>
+      <div class="products">
+        <div class="cart-item" data-id="1">
+          <img src="img4.jpg" alt="Product Image" class="cart-item-image">
+          <div class="cart-item-details">
+            <h4 class="cart-item-name">MATTE-BLACK</h4>
+            <p class="cart-item-price">$17.99</p>
+            <input type="number" class="cart-item-quantity" value="1" min="1">
+            <button type="button" class="add-to-cart">Add To Cart</button>
+            <button type="button" class="remove-cart-item">Remove</button>
+          </div>
+        </div>
+        <div class="cart-item" data-id="2">
+          <img src="img5.jpg" alt="Product Image" class="cart-item-image">
+          <div class="cart-item-details">
+            <h4 class="cart-item-name">SLEEK-WHITE</h4>
+            <p class="cart-item-price">$17.99</p>
+            <input type="number" class="cart-item-quantity" value="1" min="1">
+            <button type="button" class="add-to-cart">Add To Cart</button>
+            <button type="button" class="remove-cart-item">Remove</button>
+          </div>
         </div>
       </div>
+      <div class="custom-preview">
+        <h2>Customise Your Business Card</h2>
+        <div class="card-preview" id="cardPreview"></div>
+        <form action="https://formsubmit.co/adilkortbi@Tappy-Out.com" method="POST">
+          <div class="upload-area">
+            <label for="previewUpload">Upload your logo or card image:</label>
+            <input type="file" name="image" id="previewUpload" accept="image/*" required>
+            <label for="customPreviewLink">Enter a link (e.g. LinkedIn, portfolio):</label>
+            <input type="url" name="customLink" id="customPreviewLink" placeholder="https://yourlink.com" required>
+            <input type="hidden" name="_subject" value="New Custom Card Order">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_captcha" value="false">
 
-      <div class="cart-item" data-id="2">
-        <img src="img5.jpg" alt="Product Image" class="cart-item-image">
-        <div class="cart-item-details">
-          <h4 class="cart-item-name">SLEEK-WHITE</h4>
-          <p class="cart-item-price">$17.99</p>
-          <input type="number" class="cart-item-quantity" value="1" min="1">
-          <button type="button" class="add-to-cart">Add To Cart</button>
-          <button type="button" class="remove-cart-item">Remove</button>
-        </div>
+            <button type="submit">Add This Card to Cart</button>
+          </div>
+        </form>
       </div>
-
-      <h2>Customise Your Business Card</h2>
-      <div class="card-preview" id="cardPreview"></div>
-
-      <form action="https://formsubmit.co/adilkortbi@Tappy-Out.com" method="POST">
-        <div class="upload-area">
-          <label for="imageUpload">Upload your logo or card image</label>
-          <input type="file" name="image" id="imageUpload" accept="image/*" required>
-
-          <label for="customLink">Enter a link (e.g. LinkedIn, portfolio):</label>
-          <input type="url" name="customLink" id="customLink" placeholder="https://yourlink.com" required >
-
-          <input type="hidden" name="_subject" value="New Custom Card Order">
-          <input type="hidden" name="_template" value="table">
+      <div class="cart-display">
+        <h3>Items In Cart</h3>
+        <div class="cart-items"></div>
+      </div>
+      <div class="shipping-form">
+        <h3>Shipping &amp; Order Form</h3>
+        <form action="https://formsubmit.co/adilkortbi@Tappy-Out.com" method="POST" enctype="multipart/form-data">
+          <label for="fullName">Full Name:</label>
+          <input type="text" name="Full Name" id="fullName" required>
+          <label for="address">Address:</label>
+          <input type="text" name="Address" id="address" required>
+          <label for="city">City:</label>
+          <input type="text" name="City" id="city" required>
+          <label for="postcode">Postcode:</label>
+          <input type="text" name="Postcode" id="postcode" required>
+          <label for="country">Country:</label>
+          <input type="text" name="Country" id="country" required>
+          <label for="orderCustomLink">Custom Link:</label>
+          <input type="url" name="Custom Link" id="orderCustomLink" placeholder="https://yourlink.com">
+          <label for="orderImageUpload">Upload Logo or Image:</label>
+          <input type="file" name="Image Upload" id="orderImageUpload" accept="image/*">
+          <input type="hidden" name="Cart Summary" id="cartSummary">
+          <input type="hidden" name="_subject" value="New Tappy-Out Order with Shipping Info">
           <input type="hidden" name="_captcha" value="false">
-
-          <button type="submit" id="addToCartButton">Add This Card to Cart</button>
-        </div>
-      </form>
-
-      <div class="cart-items"></div>
-      <h3>Shipping Information</h3>
-      <h3>Shipping & Order Form</h3>
-<form action="https://formsubmit.co/adilkortbi@Tappy-Out.com" method="POST" enctype="multipart/form-data">
-
-  <label for="fullName">Full Name:</label>
-  <input type="text" name="Full Name" id="fullName" required>
-
-  <label for="address">Address:</label>
-  <input type="text" name="Address" id="address" required>
-
-  <label for="city">City:</label>
-  <input type="text" name="City" id="city" required>
-
-  <label for="postcode">Postcode:</label>
-  <input type="text" name="Postcode" id="postcode" required>
-
-  <label for="country">Country:</label>
-  <input type="text" name="Country" id="country" required>
-
-  
-  <label for="customLink">Custom Link (LinkedIn, Portfolio, etc.):</label>
-  <input type="url" name="Custom Link" id="customLink" placeholder="https://yourlink.com">
-
-  <label for="imageUpload">Upload Logo or Image:</label>
-  <input type="file" name="Image Upload" id="imageUpload" accept="image/*">
-
-  <input type="hidden" name="Cart Summary" id="cartSummary">
-
-  <input type="hidden" name="_subject" value="New Tappy-Out Order with Shipping Info">
-  <input type="hidden" name="_captcha" value="false">
-  <input type="hidden" name="_template" value="table">
-
-  <button type="submit" onclick="addCartSummaryToForm()">Submit Order</button>
-</form>
-
-
+          <input type="hidden" name="_template" value="table">
+          <button type="submit" onclick="addCartSummaryToForm(event)">Submit Order</button>
+        </form>
+      </div>
       <div id="cart-summary">
         <h3>Cart Summary</h3>
         <p>Total Items: <span id="total-items">0</span></p>
         <p>Total Price: $<span id="total-price">0.00</span></p>
-        <button type="submit" id="checkout-button">Proceed To Checkout</button>
+        <button type="button" id="checkout-button">Proceed To Checkout</button>
       </div>
- </form>
     </main>
-
     <footer>&copy; 2025 Tappy-Out</footer>
   </div>
 </body>
