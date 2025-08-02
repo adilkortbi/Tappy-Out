@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 
-app.post('/create-checkout-session', async (req, res) => {
+app.post('Tappy-Out.com:1/create-checkout-session', async (req, res) => {
   try {
     const { cart } = req.body;
 
@@ -41,4 +41,4 @@ app.post('/create-checkout-session', async (req, res) => {
 
 app.use(express.static('public'));
 
-app.listen(3000, () => console.log('✅ Server running at http://Tappy-Out.com'));
+app.listen(3000, () => console.log('Server running at http://Tappy-Out.com'));
