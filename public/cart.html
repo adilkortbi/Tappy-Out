@@ -10,7 +10,6 @@
 </head>
 <body>
   <div id="wrapper">
-    <header></header>
     <nav>
       <ul>
         <li><a href="index.html">Home</a></li>
@@ -20,7 +19,7 @@
 
     <main>
       <div class="cart-item" data-id="1">
-        <img src="cards1.jpg" alt="Product Image" class="cart-item-image">
+        <img src="img4.jpg" alt="Product Image" class="cart-item-image">
         <div class="cart-item-details">
           <h4 class="cart-item-name">MATTE-BLACK</h4>
           <p class="cart-item-price">$17.99</p>
@@ -31,7 +30,7 @@
       </div>
 
       <div class="cart-item" data-id="2">
-        <img src="cards2-2.jpg" alt="Product Image" class="cart-item-image">
+        <img src="img5.jpg" alt="Product Image" class="cart-item-image">
         <div class="cart-item-details">
           <h4 class="cart-item-name">SLEEK-WHITE</h4>
           <p class="cart-item-price">$17.99</p>
@@ -61,13 +60,49 @@
       </form>
 
       <div class="cart-items"></div>
+      <h3>Shipping Information</h3>
+      <h3>Shipping & Order Form</h3>
+<form action="https://formsubmit.co/adilkortbi@Tappy-Out.com" method="POST" enctype="multipart/form-data">
+
+  <label for="fullName">Full Name:</label>
+  <input type="text" name="Full Name" id="fullName" required>
+
+  <label for="address">Address:</label>
+  <input type="text" name="Address" id="address" required>
+
+  <label for="city">City:</label>
+  <input type="text" name="City" id="city" required>
+
+  <label for="postcode">Postcode:</label>
+  <input type="text" name="Postcode" id="postcode" required>
+
+  <label for="country">Country:</label>
+  <input type="text" name="Country" id="country" required>
+
+  
+  <label for="customLink">Custom Link (LinkedIn, Portfolio, etc.):</label>
+  <input type="url" name="Custom Link" id="customLink" placeholder="https://yourlink.com">
+
+  <label for="imageUpload">Upload Logo or Image:</label>
+  <input type="file" name="Image Upload" id="imageUpload" accept="image/*">
+
+  <input type="hidden" name="Cart Summary" id="cartSummary">
+
+  <input type="hidden" name="_subject" value="New Tappy-Out Order with Shipping Info">
+  <input type="hidden" name="_captcha" value="false">
+  <input type="hidden" name="_template" value="table">
+
+  <button type="submit" onclick="addCartSummaryToForm()">Submit Order</button>
+</form>
+
 
       <div id="cart-summary">
         <h3>Cart Summary</h3>
         <p>Total Items: <span id="total-items">0</span></p>
         <p>Total Price: $<span id="total-price">0.00</span></p>
-        <button type="button" id="checkout-button">Proceed To Checkout</button>
+        <button type="submit" id="checkout-button">Proceed To Checkout</button>
       </div>
+ </form>
     </main>
 
     <footer>&copy; 2025 Tappy-Out</footer>

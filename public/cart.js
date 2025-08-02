@@ -96,6 +96,27 @@ window.onload = function () {
   updateCartSummary();
   showCartItems();
 };
+function addCartSummaryToForm() {
+  let cart = JSON.parse(localStorage.getItem('cart')) || {};
+  let summary = "";
+
+  if (Object.keys(cart).length === 0) {
+    alert("Cart is empty. Please add items before submitting.");
+    event.preventDefault();
+    return false;
+  }
+
+  for (let id in cart) {
+    const item = cart[id];
+    summary += `• ${item.name} - $${item.price} x ${item.quantity}\n`;
+  }
+
+  let total = Object.values(cart).reduce((sum, item) => sum + item.price * item.quantity, 0);
+  summary += `\nTotal Price: $${total.toFixed(2)}\n`;
+
+  document.getElementById('cartSummary').value = summary;
+}
+
 
 const imageInput = document.getElementById('imageUpload');
 const previewDiv = document.getElementById('cardPreview');
